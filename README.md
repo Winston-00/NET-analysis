@@ -10,7 +10,7 @@ Semi-automated analysis of the size and area of neutrophil extracellular traps o
 
 - Download pcv2.py 
 
-- get in Anaconda Powershell Prompt, and```cd```to the path where you download pcv2.py
+- Open Anaconda Powershell Prompt, and```cd```to the path where you download pcv2.py
 
 ``` 
 pip install opencv-python 
