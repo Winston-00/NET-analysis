@@ -25,5 +25,5 @@ pip install imutils
 
 - Drag the track bar to adjust the circle to a suitable size
 
-- enter 'q' to record the count/size of this picture
+- enter 'q' to record the count/size of the picture
 
