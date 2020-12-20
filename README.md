@@ -17,8 +17,13 @@ pip install opencv-python
 pip install imutils
 ```
 
--input ``` python pcv2.py import_path ouput_foldname color ```
+-input ``` python pcv2.py import_path ouput_foldname color DPI ```
 
- | import_path      | ouput_foldname     | color     |
-| ---------- | :-----------:  | :-----------: |
-| the path with pictures     | folder name for outputs     | blue green red    |
+ | import_path      | ouput_foldname     | color     | DPI     |
+| ---------- | :-----------:  | :-----------: | :-----------: |
+| the path with pictures     | folder name for outputs     | blue/green/red    | pixels / size of pictures   |
+
+- Drag the track bar to adjust the circle to a suitable size
+
+- enter 'q' to record the count/size of this picture
+
