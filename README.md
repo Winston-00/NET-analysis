@@ -15,4 +15,4 @@ pip install imutils
  input 
  | import_path      | ouput_foldname     | color     |
 | ---------- | :-----------:  | :-----------: |
-| the path with pictures     | folder name for outputs     | blue, green, red    |
+| the path with pictures     | folder name for outputs     | blue green red    |
