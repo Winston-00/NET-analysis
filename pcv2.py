@@ -100,13 +100,13 @@ def callback(shelf):
         #dpi = 1282.61*1036.78/1440/1920#um^2/pix
         for c in cnts:
             # if the contour is not sufficiently large, ignore it
-            if not   50 <= cv2.contourArea(c) <= 2000:
+            if not   50 <= cv2.contourArea(c):
                 continue
             hull = cv2.convexHull(c)
             #print( hull)
             cv2.drawContours(image_contours,[hull],0,(0,255,255),1)
             cellcounted += 1  
-            series_area = series_area.append(pd.Series(cv2.contourArea(c),index = [cellcounted]))#计算面积
+            series_area = series_area.append(pd.Series(cv2.contourArea(c)/dpi,index = [cellcounted]))#计算面积
         print("{} Nuclei".format(cellcounted),loow)
         img = image_contours
         cv2.imshow('Track Bar', img)
@@ -172,28 +172,26 @@ def cell_area_counter(path,img_prefixname,file_extension,colorz):
 def count_cell_area_inFolder(import_foldname,ouput_foldname,colorz):
     try:
         path=import_foldname
-
+        #global dpi = DPI
         os.chdir(os.path.dirname(path))
         file_list= os.listdir(path)
         print(file_list)
         filename_list = []
         df = pd.DataFrame({})
         dff_area = pd.DataFrame({})
-        print(colorz_terms[colorz])
+        print(colorz)
         for file in file_list:
             file_input_path=path+'/'+file
             img_prefixname, file_extension=os.path.splitext(file)
             if file_extension == '.tif':
-                if img_prefixname.split("_")[-1] == colorz_terms[colorz]:
-                    print(img_prefixname)
-                    #print(img_prefixname,colorz)
-                    filename_list.append(img_prefixname)
-                    kk=cell_area_counter(path,img_prefixname,file_extension,colorz)
-                    df = df.append(kk[0],ignore_index=True)
-                    dff_area = dff_area.append(kk[1],ignore_index=True)
-                else:
-                    continue
+                filename_list.append(img_prefixname)
+                kk=cell_area_counter(path,img_prefixname,file_extension,colorz)
+                df = df.append(kk[0],ignore_index=True)
+                dff_area = dff_area.append(kk[1],ignore_index=True)
                 print(img_prefixname)
+            else:
+                continue
+            
 
         print(filename_list)
         dff=df.set_index("imageName")                                    
@@ -204,9 +202,11 @@ def count_cell_area_inFolder(import_foldname,ouput_foldname,colorz):
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         save_path1 = import_foldname+"/"+ouput_foldname+ "/"+colorz+"-counts.csv"
+        os.chdir(os.path.dirname(save_path1))
         dff.to_csv(os.path.basename(save_path1))
         
         save_path2 = import_foldname+"/"+ouput_foldname+ "/"+colorz+"-area.csv"
+        os.chdir(os.path.dirname(save_path2))
         dff_area.to_csv(os.path.basename(save_path2))
         
         print("saved")
@@ -223,15 +223,14 @@ def count_cell_area_inFolder(import_foldname,ouput_foldname,colorz):
         print('########################################################')
         
 parse = argparse.ArgumentParser()
-parse.add_argument("import_foldname", type=str)
+parse.add_argument("import_foldname", type=str,help = 'folder of pictures in tiff')
 parse.add_argument("ouput_foldname", type=str)
-parse.add_argument("color", type=str)
+parse.add_argument("color", type=str,help = 'blue, green, red')
 parse.add_argument("DPI", type=float,help = '1282.61*1036.78/1440/1920 #um^2/pix' )  
 args = parse.parse_args()
 dpi = args.DPI
 import_foldname =args.import_foldname
 ouput_foldname = args.ouput_foldname
 colorz = args.color
-
 count_cell_area_inFolder(import_foldname,ouput_foldname,colorz)
 
