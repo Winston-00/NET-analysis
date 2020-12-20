@@ -1,4 +1,4 @@
-# NET-analysis
+# Cell size/count analysis
 
 Semi-automated analysis of the size and area of neutrophil extracellular traps or other cells.
 
