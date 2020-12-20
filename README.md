@@ -1,6 +1,6 @@
 # Cell size/count analysis
 
-Semi-automated analysis of the size and area of neutrophil extracellular traps or other cells.
+Semi-automated analysis of the size and count of neutrophil extracellular traps or other cells.
 
 
 
